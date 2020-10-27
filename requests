@@ -1,0 +1,31 @@
+GET http://127.0.0.1:5000/machine HTTP/1.1
+
+DELETE http://127.0.0.1:5000/machine/1 HTTP/1.1
+
+
+POST http://127.0.0.1:5000/machine HTTP/1.1
+content-type: application/json
+
+{
+    "name": "Machine 3",
+    "address": "127.0.0.3"
+}
+
+POST http://127.0.0.1:5000/job HTTP/1.1
+content-type: application/json
+
+{
+    "description": "Job 2"
+}
+
+
+POST http://127.0.0.1:5000/job_run HTTP/1.1
+content-type: application/json
+
+{
+    "machine_id": 1,
+    "job_id": 2
+}
+
+
+DELETE http://127.0.0.1:5000/job_run/1 HTTP/1.1
