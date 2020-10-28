@@ -26,10 +26,6 @@ def create_app(test_config=None):
     except OSError:
         pass
 
-    @app.route("/hello")
-    def hello():
-        return "Hello, World!"
-
     # register the database commands
     db_file = app.config.get('DATABASE', 'scheduler.sqlite2')
     app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{db_file}'    
@@ -42,10 +38,13 @@ def create_app(test_config=None):
     db.create_all(app=app)
 
     # apply the blueprints to the app
-    from scheduler.controller import machine, job, job_run
+    from scheduler.controller import machine, job, job_run, web
 
     app.register_blueprint(machine.bp)
     app.register_blueprint(job.bp)
     app.register_blueprint(job_run.bp)
+    app.register_blueprint(web.bp)
+
+    app.add_url_rule("/", endpoint="index")
 
     return app
