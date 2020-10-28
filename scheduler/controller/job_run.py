@@ -15,7 +15,7 @@ from scheduler.models.machine import Machine
 from scheduler.models.job import Job
 
 
-bp = Blueprint("job_run", __name__, url_prefix="/job_run")
+bp = Blueprint("job_run", __name__, url_prefix="/v0/job_run")
 
 
 @bp.route("/")

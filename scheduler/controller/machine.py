@@ -13,7 +13,7 @@ import json
 from scheduler.models.machine import Machine
 
 
-bp = Blueprint("machine", __name__, url_prefix="/machine")
+bp = Blueprint("machine", __name__, url_prefix="/v0/machine")
 
 
 @bp.route("/")
