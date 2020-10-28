@@ -49,7 +49,7 @@
           <ul class="nav flex-column">
             {% for item in side_bar_items %}
             <li class="nav-item">
-              <a class="nav-link {%+ if item.is_active %}active{% endif %}" href="#">
+              <a class="nav-link {%+ if item.is_active %}active{% endif %}" href="{{item.href}}">
                 <span data-feather="{{item.icon}}"></span>
                 {{item.name}} {%+ if item.is_active %}<span class="sr-only">(current)</span>{% endif %}
               </a>
