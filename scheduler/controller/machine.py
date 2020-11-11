@@ -26,6 +26,16 @@ def get_all_machines():
     return Response(RESULT, mimetype=MIMETYPE)
 
 
+@bp.route("/available")
+def get_all_available_machines():
+    """Get all available machines"""
+    machines = [x.serialize() for x in Machine.get_available_machines()]
+    RESULT = json.dumps(machines)
+    MIMETYPE = 'application/json'
+
+    return Response(RESULT, mimetype=MIMETYPE)
+
+
 @bp.route("/", methods=['POST'])
 def add_new_machine():
     """Add a new machine"""

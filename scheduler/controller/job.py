@@ -25,6 +25,14 @@ def get_all_jobs():
 
     return Response(RESULT, mimetype=MIMETYPE)
 
+@bp.route("/available")
+def get_all_available_jobs():
+    """Get all jobs"""
+    jobs = [x.serialize() for x in Job.get_available_jobs()]
+    RESULT = json.dumps(jobs)
+    MIMETYPE = 'application/json'
+
+    return Response(RESULT, mimetype=MIMETYPE)
 
 @bp.route("/", methods=['POST'])
 def add_new_job():

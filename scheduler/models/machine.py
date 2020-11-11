@@ -1,7 +1,24 @@
 from datetime import datetime
 import json
 from .db import db
+import paramiko
 
+USERNAME = "benchexec"
+PASSWORD = "password"
+
+class SSH:
+    def __init__(self, hostname):
+        self.ssh = paramiko.SSHClient()
+        self.ssh.load_system_host_keys()
+        self.ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+        self.ssh.connect(hostname=hostname,username=USERNAME,password=PASSWORD)
+
+    def exec_cmd(self,cmd):
+        stdin,stdout,stderr = self.ssh.exec_command(cmd)
+        if stderr.channel.recv_exit_status() != 0:
+            print stderr.read()
+        else:
+            print stdout.read()
 
 class Machine(db.Model):
     """
@@ -47,6 +64,11 @@ class Machine(db.Model):
     def delete(pk: int):
         Machine.query.filter_by(id=pk).delete()
         db.session.commit()
+
+    @staticmethod
+    def get_available_machines():
+        ms = Machine.query.all()
+        return [m for m in ms if len(m.jobruns) == 0]
 
     @staticmethod
     def create_machine(name: str, address: str, is_active: bool) -> 'Machine':

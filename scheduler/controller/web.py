@@ -15,17 +15,20 @@ from scheduler.view.dashboard import Dashboard
 from scheduler.view.machines import Machines
 from scheduler.view.jobs import Jobs
 from scheduler.view.results import Results
-
+from scheduler.models.checks import Checks
 
 bp = Blueprint("web", __name__, url_prefix="/")
 
-D = Dashboard()
 M = Machines()
 J = Jobs()
 R = Results()
 
 
-def _template(layout: Base):
+def _get_system_info():
+        return {"system_check": True, "database_check": False, "machines": 15, "jobs": 74, "active_jobs": 15, "algorithm": "Priority Queue", "version": "0.0.1"}
+
+
+def _template(layout):
     return render_template(layout._template_path(),
                            **layout.generate_template_args())
 
@@ -39,7 +42,7 @@ def hello_world():
 @bp.route("/")
 def dashboard():
     """Return the dashboard view"""
-    return _template(D)
+    return _template(Dashboard(_get_system_info()))
 
 
 @bp.route("/machines")

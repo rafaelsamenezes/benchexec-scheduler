@@ -47,6 +47,11 @@ class Job(db.Model):
             Job.STATUS[self.status],
             self.priority)
 
+    @staticmethod
+    def get_available_jobs():
+        js = Job.query.all()
+        return [j for j in js if j.status == 0]
+
     def save(self):
         db.session.add(self)
         db.session.commit()
