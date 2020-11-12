@@ -29,6 +29,8 @@ def create_app(test_config=None):
     # register the database commands
     db_file = app.config.get('DATABASE', 'scheduler.sqlite2')
     app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{db_file}'    
+    app.config['APPLICATION_ROOT'] = app.config.get('APPLICATION_ROOT', '/')
+    
 
     import scheduler.models.machine
     import scheduler.models.job
