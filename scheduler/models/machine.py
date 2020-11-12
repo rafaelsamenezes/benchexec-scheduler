@@ -16,9 +16,9 @@ class SSH:
     def exec_cmd(self,cmd):
         stdin,stdout,stderr = self.ssh.exec_command(cmd)
         if stderr.channel.recv_exit_status() != 0:
-            print stderr.read()
+            print(stderr.read())
         else:
-            print stdout.read()
+            print(stdout.read())
 
 class Machine(db.Model):
     """
